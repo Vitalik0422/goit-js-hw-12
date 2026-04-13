@@ -1,0 +1,39 @@
+.form-container {
+  display: flex;
+  justify-content: center;
+  padding: 50px 150px;
+  position: relative;
+}
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+
+  & label {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    row-gap: 4px;
+  }
+}
+.input-form {
+  width: 500px;
+  padding: 10px;
+}
+
+.textarea-form {
+  width: 500px;
+  padding: 10px;
+}
+.label-title {
+  font-size: 20px;
+}
+.notification {
+  display: none;
+  color: red;
+  font-weight: 600;
+  font-size: 16px;
+}
+.isActive {
+  display: block;
+}
