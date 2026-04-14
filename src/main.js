@@ -38,10 +38,14 @@ const fetchData = async ({ query, page }) => {
     await waitForImages(newItem);
     newItem.forEach(item => item.classList.add('isActive'));
     hideLoader();
-    if (!(fetchParams.page >= fetchParams.totalPage)) {
-      showLoadMoreButton();
+    if (fetchParams.page >= fetchParams.totalPage) {
+      throw new Error(
+        'We`re sorry, but you`ve reached the end of search results.'
+      );
     }
+    showLoadMoreButton();
   } catch (error) {
+    console.dir(error);
     hideLoader();
     iziToast.error({ title: 'Error', message: error.message, ...options });
   }
@@ -74,13 +78,6 @@ const handleClick = async () => {
       top: cardHeight * 2,
       behavior: 'smooth',
     });
-    if (fetchParams.page >= fetchParams.totalPage) {
-      hideLoadMoreButton();
-      iziToast.info({
-        message: "We're sorry, but you've reached the end of search results.",
-        ...options,
-      });
-    }
   } catch (error) {
     hideLoadMoreButton();
     iziToast.error({ title: 'Error', message: error.message, ...options });
