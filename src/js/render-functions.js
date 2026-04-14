@@ -1,7 +1,7 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-const galleryList = document.querySelector('.gallery');
-const loader = document.querySelector('.loader');
+import { refs } from './refs';
+
 const gallery = new SimpleLightbox('.gallery a');
 
 const createGallery = images => {
@@ -20,45 +20,50 @@ const createGallery = images => {
       </li>`
     )
     .join('');
-  galleryList.innerHTML = markup;
+  refs.galleryList.insertAdjacentHTML('beforeend', markup);
   gallery.refresh();
-  return galleryList;
+  const items = [...refs.galleryList.querySelectorAll('.galleryItem')].slice(
+    -images.length
+  );
+  return items;
 };
 
-const waitForImages = container => {
-  const img = [...container.querySelectorAll('img')];
-  const promises = img.map(
-    item =>
-      new Promise(resolve => {
-        if (item.complete) resolve();
-        else item.addEventListener('load', resolve);
-      })
+const waitForImages = async container => {
+  const allImg = container.map(item => item.querySelector('img'));
+  await Promise.all(
+    allImg.map(
+      item =>
+        new Promise(resolve => {
+          if (item.complete) resolve();
+          item.addEventListener('load', resolve);
+          item.addEventListener('error', resolve);
+        })
+    )
   );
-  return Promise.all(promises);
 };
 
 const clearGallery = () => {
-  galleryList.innerHTML = '';
-};
-const showGallery = () => {
-  galleryList.classList.add('isActiveGallery');
-};
-const hideGallery = () => {
-  galleryList.classList.remove('isActiveGallery');
+  refs.galleryList.innerHTML = '';
 };
 const showLoader = () => {
-  loader.classList.add('isActive');
+  refs.loader.classList.add('isActive');
 };
 const hideLoader = () => {
-  loader.classList.remove('isActive');
+  refs.loader.classList.remove('isActive');
+};
+const showLoadMoreButton = () => {
+  refs.loadMoreBtn.classList.add('isActive');
+};
+const hideLoadMoreButton = () => {
+  refs.loadMoreBtn.classList.remove('isActive');
 };
 
 export {
   createGallery,
   clearGallery,
-  showGallery,
-  hideGallery,
   showLoader,
   hideLoader,
   waitForImages,
+  showLoadMoreButton,
+  hideLoadMoreButton,
 };

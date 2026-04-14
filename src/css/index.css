@@ -12,7 +12,7 @@ main {
   padding: 8px 16px;
   font-size: 16px;
 }
-.submit-btn {
+.btn {
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   font-size: 16px;
@@ -26,24 +26,21 @@ main {
   color: #fff;
 }
 
-.gallery {
+.btn-loadMore {
   display: none;
+  width: 125px;
+}
+
+.gallery {
   flex-wrap: wrap;
   gap: 24px;
   justify-content: start;
   display: flex;
-  opacity: 0;
-}
-
-.isActiveGallery {
-  display: flex;
-  opacity: 1;
-  transition: opacity 250ms linear;
 }
 
 .galleryItem {
+  display: none;
   box-sizing: border-box;
-  display: flex;
   flex-direction: column;
   flex-basis: calc((100% - 24px * 2) / 3);
   height: 260px;
@@ -76,12 +73,8 @@ img {
 
 /* LOADER */
 .loader {
-  position: absolute;
-  top: 500px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 70px;
-  height: 70px;
+  width: 45px;
+  height: 45px;
   border: 5px solid;
   border-color: #ff3d00 transparent;
   border-radius: 50%;
@@ -100,5 +93,5 @@ img {
 }
 
 .isActive {
-  display: inline-block;
+  display: flex;
 }
